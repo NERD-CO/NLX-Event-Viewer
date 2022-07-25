@@ -6,7 +6,7 @@ cd('C:\Users\John\Downloads\08192020\08192020\2020-08-19_11-04-04\NWB_Data')
 % I get a 8214528x1 array
 
 
-testfile = nwbRead('AT5_Session_1_filter.nwb');
+testfile = nwbRead('MW35_Session_1_filter.nwb');
 
 %% Get processed/filtered neurophysiology
 macrowires = testfile.processing.get('ecephys').nwbdatainterface.get('LFP').electricalseries.get('MacroWireSeries').data.load;
@@ -24,3 +24,17 @@ behE = beh_timestamps(1);
 %% Find index in ephys for Behavior Event 1 (behE)
 
 [a,b] = min(abs(behE - downTS))
+
+%% 
+testfile = nwbRead('MW35_Session_1_filter.nwb');
+macrowireTEST = testfile.processing.get('ecephys').nwbdatainterface.get('LFP').electricalseries.get('MacroWireSeries').data.load;
+
+%%
+size(macrowireTEST)
+
+%%
+
+testfile2 = nwbRead('MW35_Session_2_filter.nwb');
+microwireTEST = testfile2.processing.get('ecephys').nwbdatainterface.get('LFP').electricalseries.get('MicroWireSeries').data.load;
+%%
+size(microwireTEST)
