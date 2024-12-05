@@ -1,0 +1,71 @@
+getPCname = getenv('COMPUTERNAME');
+
+switch getPCname
+    case 'yy' % Home PC
+        githubStub = 'C:\Users\johna\OneDrive\Documents\Github';
+
+    case 'DESKTOP-EGFQKAI' % Laptop
+        githubStub = 'C:\Users\johna\OneDrive\Documents\Github';
+
+    case 'DESKTOP-I5CPDO7' % Work PC
+        githubStub = 'C:\Users\Admin\Documents\Github';
+
+end
+
+%% Add Github paths
+addpath([githubStub,'\NLX-Event-Viewer\NLX_Reference_Analysis\'])
+addpath([githubStub,'\NLX-Event-Viewer\NLX_IO_Code\'])
+
+%% CD to data folder
+dataFOLDER = 'I:\EMU_MW40\NWB\2024-11-20_09-58-11';
+
+cd(dataFOLDER);
+
+eventFILEname = 'Events.nev';
+
+[Timestamps, ~, TTLs, ~, EventStrings, Header] =...
+            Nlx2MatEV(eventFILEname, [1 1 1 1 1], 1, 1, [] );
+
+%% 11/19/2024 - First reference recording
+
+% 1. Within tetrode
+% 2. Across tetrode
+% 3. Macro within hybrid
+% 4. Macro ipsilateral
+% 5. Macro contralateral
+
+% Find 'Starting Recording'
+
+startINDICES = matches(EventStrings,'Starting Recording');
+startLOCS = find(startINDICES);
+stopINDICES = matches(EventStrings,'Stopping Recording');
+stopLOCS = find(stopINDICES);
+
+startTStamps = Timestamps(startINDICES);
+stopTStamps = Timestamps(stopINDICES);
+
+offSET_minutes = ((stopTStamps - startTStamps)/1000000)/60;
+
+lessTHAN5mins = offSET_minutes < 5;
+useSTARTi = startLOCS(lessTHAN5mins);
+useSTOPi = stopLOCS(lessTHAN5mins);
+useTIMESstart = startTStamps(lessTHAN5mins);
+useTIMESstop = stopTStamps(lessTHAN5mins);
+
+refStyle = {'within_tetrode','across_tetrode','macro_onHybrid','macro_ipsiWire','macro_contraWire'};
+recDepth = '0.5mm';
+reference1 = struct;
+for ii = 1:length(lessTHAN5mins)
+ 
+    reference1.style{ii} = refStyle{ii};
+    reference1.startNLX_IND(ii) = stopINDICES
+    reference1.startNLX_time(ii) =
+    reference1.startNLX_IND(ii) = stopINDICES
+    reference1.startNLX_time(ii) =
+
+end
+
+
+
+
+
