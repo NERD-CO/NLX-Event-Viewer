@@ -1,6 +1,6 @@
 %% CD to event folder
 
-cd('C:\Users\Admin\Downloads\2024-10-14_10-47-58\2024-10-14_10-47-58')
+cd('C:\Users\Admin\Downloads\2024-11-21_14-17-07\2024-11-21_14-17-07')
 
 %% Load event file
 
