@@ -17,7 +17,7 @@ addpath([githubStub,'\NLX-Event-Viewer\NLX_Reference_Analysis\'])
 addpath([githubStub,'\NLX-Event-Viewer\NLX_IO_Code\'])
 
 %% CD to data folder 11/19/2024
-dataFOLDER = 'I:\EMU_MW40\NWB\2024-11-20_09-58-11';
+dataFOLDER = 'H:\Transfer_01272025\transfer_01222025\MW44\2025-01-16_10-16-26';
 
 cd(dataFOLDER);
 
@@ -46,16 +46,16 @@ stopTStamps = Timestamps(stopINDICES);
 
 offSET_minutes = ((stopTStamps - startTStamps)/1000000)/60;
 
-lessTHAN5mins = offSET_minutes < 5;
+lessTHAN5mins = logical([1 0 0 0 0 0 0]);
 useSTARTi = startLOCS(lessTHAN5mins);
 useSTOPi = stopLOCS(lessTHAN5mins);
 useTIMESstart = startTStamps(lessTHAN5mins);
 useTIMESstop = stopTStamps(lessTHAN5mins);
 
-refStyle = {'within_tetrode','across_tetrode','macro_onHybrid','macro_ipsiWire','macro_contraWire'};
-recDepth = '0.5mm';
+refStyle = {'within_tetrode','across_tetrode','macro_onHybrid'};
+recDepth = '1mm';
 reference1 = struct;
-for ii = 1:length(lessTHAN5mins)
+for ii = 1:sum(lessTHAN5mins)
  
     reference1.style{ii} = refStyle{ii};
     reference1.startNLX_IND(ii) = useSTARTi(ii);
@@ -64,6 +64,8 @@ for ii = 1:length(lessTHAN5mins)
     reference1.stopNLX_time(ii) = useTIMESstop(ii);
 
 end
+
+save('MW44_Ref2.mat','reference1')
 
 %% CD to data folder 11/21/2024
 dataFOLDER = 'I:\EMU_MW40\NWB\2024-11-21_10-02-41';
